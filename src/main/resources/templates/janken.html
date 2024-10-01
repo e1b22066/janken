@@ -4,9 +4,15 @@
 <h1>Janken GAME!</h1>
 
 <body>
+  <p>
   <div th:if="${username}">
     Hi [[${username}]]
   </div>
+  <a href="/jankengame?hand=Gu">ぐー</a>
+  <a href="/jankengame?hand=tyoki">ちょき</a>
+  <a href="/jankengame?hand=Pa">ぱー</a><br>
+  [[${Player_hand}]]<br>
+  [[${Com_hand}]]<br>
+  [[${result}]]
+  </p>
 </body>
-
-</html>
