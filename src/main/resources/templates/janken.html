@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 
+<a href="/logout">ログアウト</a>
+
 <h1>Janken GAME!</h1>
+
+<div th:if="${room}">
+  エントリー
+  <ul>
+    <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
+      thが指定されているので[]が不要になる-->
+    <li th:each="user : ${room.users}">[[${user}]]</li>
+  </ul>
+</div>
 
 <body>
   <p>
