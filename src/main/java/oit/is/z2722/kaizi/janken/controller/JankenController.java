@@ -63,6 +63,13 @@ public class JankenController {
     model.addAttribute("Player_hand", "あなたの手 " + hand);
     model.addAttribute("Com_hand", "相手の手 " + "Gu");
     return "janken.html";
-
   }
+
+  @GetMapping("/match")
+  public String match(@RequestParam Integer id, ModelMap model) {
+    User user = UserMapper.selectById(id);
+    model.addAttribute("user", user);
+    return "match.html";
+  }
+
 }
