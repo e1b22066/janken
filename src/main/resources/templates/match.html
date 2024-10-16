@@ -1,8 +1,34 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<a href="/logout">ログアウト</a>
+<head>
+  <meta charset="UTF-8">
+  <title>Match</title>
+</head>
 
-<h1>Match</h1></br>
+<body>
+  <a href="/logout">ログアウト</a>
 
-<h1>ほんだ V.S. CPU</h1>
+  <h1>Match</h1><br />
+
+  <h1>ほんだ V.S. CPU</h1>
+
+  <p>
+  <div th:if="${user}">
+    <!-- idは動的にThymeleafの式で指定 -->
+    <a th:href="@{/fight(id=${user.id}, hand='Gu')}">ぐー</a>
+    <a th:href="@{/fight(id=${user.id}, hand='Choki')}">ちょき</a>
+    <a th:href="@{/fight(id=${user.id}, hand='Pa')}">ぱー</a><br>
+  </div>
+  <!-- プレイヤーの手、CPUの手、結果を表示 -->
+  <div th:if="${Player_hand}">
+    [[${Player_hand}]]<br>
+    [[${Com_hand}]]<br>
+    [[${result}]]
+  </div>
+  </p>
+
+  <a href="/janken">もどる</a>
+</body>
+
+</html>
