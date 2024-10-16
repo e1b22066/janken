@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,7 +55,7 @@ public class JankenController {
     if (hand.equals("Gu")) {
       result = result + " Draw";
     }
-    if (hand.equals("tyoki")) {
+    if (hand.equals("Choki")) {
       result = result + " You Lose";
     }
     if (hand.equals("Pa")) {
@@ -69,6 +71,34 @@ public class JankenController {
   public String match(@RequestParam Integer id, ModelMap model) {
     User user = UserMapper.selectById(id);
     model.addAttribute("user", user);
+    return "match.html";
+  }
+
+  @GetMapping("/fight")
+  public String jankengame_1(@RequestParam Integer id, @RequestParam String hand, ModelMap model, Principal prin) {
+    String loginUser = prin.getName();
+    Match match_fight = new Match();
+    User user = UserMapper.selectById(id);
+    model.addAttribute("user", user);
+    User player = UserMapper.selectByName(loginUser);
+    String result = "結果";
+    if (hand.equals("Gu")) {
+      result = result + " Draw";
+    }
+    if (hand.equals("Choki")) {
+      result = result + " You Lose";
+    }
+    if (hand.equals("Pa")) {
+      result = result + " You Win!";
+    }
+    match_fight.setUser1(player.getId());
+    match_fight.setUser2(id);
+    match_fight.setUser1Hand(hand);
+    match_fight.setUser2Hand("Gu");
+    MatchMapper.insertMatch(match_fight);
+    model.addAttribute("result", result);
+    model.addAttribute("Player_hand", "あなたの手 " + hand);
+    model.addAttribute("Com_hand", "相手の手 " + "Gu");
     return "match.html";
   }
 
