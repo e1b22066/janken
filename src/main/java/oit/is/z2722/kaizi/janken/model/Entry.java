@@ -1,4 +1,4 @@
-package oit.is.z2722.kaizi.janken.mode;
+package oit.is.z2722.kaizi.janken.model;
 
 import java.util.ArrayList;
 

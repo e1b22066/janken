@@ -3,7 +3,11 @@
 
 <a href="/logout">ログアウト</a>
 
-<h1>Janken GAME!</h1>
+<h1>Janken GAME!</h1><br />
+
+<div th:if="${username}">
+  Hi [[${username}]]
+</div>
 
 <div th:if="${room}">
   エントリー
@@ -14,16 +18,27 @@
   </ul>
 </div>
 
+<p th:if="${user}">
+  ユーザ情報
+  <!--statはステータス変数
+      https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
+    -->
+
+<div th:each="user,stat:${user}">
+  <tr>
+    <td>id:[[${user.id}]]</td>
+    <td>name:[[${user.name}]]</td>
+  </tr>
+</div>
+</p>
+
 <body>
   <p>
-  <div th:if="${username}">
-    Hi [[${username}]]
-  </div>
-  <a href="/jankengame?hand=Gu">ぐー</a>
-  <a href="/jankengame?hand=tyoki">ちょき</a>
-  <a href="/jankengame?hand=Pa">ぱー</a><br>
-  [[${Player_hand}]]<br>
-  [[${Com_hand}]]<br>
-  [[${result}]]
+    <a href="/jankengame?hand=Gu">ぐー</a>
+    <a href="/jankengame?hand=tyoki">ちょき</a>
+    <a href="/jankengame?hand=Pa">ぱー</a><br>
+    [[${Player_hand}]]<br>
+    [[${Com_hand}]]<br>
+    [[${result}]]
   </p>
 </body>
