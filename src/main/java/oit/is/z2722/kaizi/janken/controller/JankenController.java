@@ -47,6 +47,8 @@ public class JankenController {
     model.addAttribute("user", user);
     ArrayList<Match> match = MatchMapper.selectAllByMatch();
     model.addAttribute("match", match);
+    ArrayList<MatchInfo> matchinfo = MatchInfoMapper.selectAllByMatchInfo();
+    model.addAttribute("matchinfo", matchinfo);
     String loginUser = prin.getName();
     model.addAttribute("username", loginUser);
     this.room.addUser(loginUser);
