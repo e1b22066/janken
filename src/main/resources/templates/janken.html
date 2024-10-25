@@ -18,6 +18,22 @@
   </ul>
 </div>
 
+<p th:if="${matchinfo}">
+<h1>アクティブな試合</h1>
+<!--statはステータス変数
+      https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
+    -->
+
+<div th:each="matchinfo,stat:${matchinfo}">
+  <tr th:each="matchinfo : ${matchinfo}" th:if="${matchinfo.isActive}">
+    <td>ID: [[${matchinfo.id}]]</td>
+    <td>User1: [[${matchinfo.user1}]]</td>
+    <td>User2: [[${matchinfo.user2}]]</td>
+    <td>isActive: [[${matchinfo.isActive}]]</td>
+  </tr>
+</div>
+</p>
+
 <p th:if="${match}">
 <h1>試合結果</h1>
 <!--statはステータス変数
@@ -35,14 +51,4 @@
 </div>
 </p>
 
-<body>
-  <p>
-    <a href="/jankengame?hand=Gu">ぐー</a>
-    <a href="/jankengame?hand=Choki">ちょき</a>
-    <a href="/jankengame?hand=Pa">ぱー</a><br>
-    [[${Player_hand}]]<br>
-    [[${Com_hand}]]<br>
-    [[${result}]]
-  </p>
-</body>
 </html>
