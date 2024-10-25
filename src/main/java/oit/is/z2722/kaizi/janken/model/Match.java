@@ -6,17 +6,19 @@ public class Match {
   int user2;
   String user1Hand;
   String user2Hand;
+  boolean isActive;
 
   public Match() {
 
   }
 
-  public Match(int id2, int user1_2, int user2_2, String user1Hand2, String user2hand2) {
+  public Match(int id2, int user1_2, int user2_2, String user1Hand2, String user2hand2, boolean isActive2) {
     this.id = id2;
     this.user1 = user1_2;
     this.user2 = user2_2;
     this.user1Hand = user1Hand2;
     this.user2Hand = user2hand2;
+    this.isActive = isActive2;
   }
 
   public int getUser1() {
@@ -49,6 +51,14 @@ public class Match {
 
   public void setUser2Hand(String user2Hand) {
     this.user2Hand = user2Hand;
+  }
+
+  public boolean getIsActive() {
+    return isActive;
+  }
+
+  public void setIsActive(boolean isActive) {
+    this.isActive = isActive;
   }
 
   public int getId() {
