@@ -6,12 +6,19 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface MatchMapper {
 
   @Select("SELECT ID,USER1,USER2,USER1HAND,USER2HAND,ISACTIVE FROM MATCHES")
   ArrayList<Match> selectAllByMatch();
+
+  @Select("SELECT ID, USER1,USER2,USER1HAND,USER2HAND,ISACTIVE FROM MATCHES WHERE ID = #{id}")
+  Match selectById(int id);
+
+  @Update("UPDATE MATCHES SET USER1=#{user1}, USER2=#{user2}, USER1HAND=#{user1Hand}, USER2HAND=#{user2Hand}, ISACTIVE=#{isActive} WHERE id = #{id}")
+  void updateById(Match match);
 
   @Insert("INSERT INTO MATCHES (USER1,USER2,USER1HAND,USER2HAND,ISACTIVE) VALUES (#{user1},#{user2},#{user1Hand},#{user2Hand},#{isActive});")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")

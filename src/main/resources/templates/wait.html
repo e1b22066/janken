@@ -1,18 +1,103 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Wait</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      border: none;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      function startSSE() {
+        var sse = new EventSource('/Update'); // サーバーからのデータを受信
+
+        sse.onmessage = function (event) {
+          console.log("sse.onmessage");
+          console.log(event.data);
+
+          // JSONデータをJavaScriptオブジェクトに変換
+          var matches_list = JSON.parse(event.data);
+          var matches_table = ""; // 表の行データを蓄積
+          var hasActiveMatch = false; // アクティブなマッチがあるかどうかのフラグ
+
+          // 各データをループして指定のフォーマットでHTMLテーブルを構築
+          hasActiveMatch = true; // アクティブなマッチがあることを記録
+          var match = matches_list;
+          var formattedResult = `Match: id ${match.id} user1: ${match.user1} user2: ${match.user2} user1Hand: ${match.user1Hand} user2Hand: ${match.user2Hand}`;
+          matches_table += `<tr><td colspan="6">${formattedResult}</td></tr>`;
+
+
+
+          console.log(matches_table); // コンソールで結果を確認
+
+          // 表示エリアの内容を更新
+          var matchesDisplay = document.getElementById("matches_display");
+          matchesDisplay.innerHTML = `<table><tbody>${matches_table}</tbody></table>`;
+
+          // アクティブなマッチがある場合に「結果」タイトルと「戻る」リンクを表示
+          var resultTitle = document.getElementById("result_title");
+          var backLink = document.getElementById("back_link");
+          if (hasActiveMatch) {
+            resultTitle.style.display = "block";
+            backLink.style.display = "block";
+          } else {
+            resultTitle.style.display = "none";
+            backLink.style.display = "none";
+          }
+        }
+
+        // 接続エラーが発生したときの再接続処理
+        sse.onerror = function () {
+          console.log("SSE connection was lost. Attempting to reconnect...");
+          sse.close();
+          setTimeout(startSSE, 3000); // 3秒後に再接続
+        };
+      }
+
+      startSSE(); // 非同期通信の開始
+    }
+  </script>
 </head>
 
 <body>
-
-  <h1>相手を待っています</h1><br />
+  <h1>相手の手を待っています</h1>
 
   <div th:if="${username}">
     Hi [[${username}]]
   </div>
+
+  <div id="result_title" style="display: none;">
+    <h1>結果</h1>
+  </div>
+
+  <div>
+    <table>
+      <tbody id="matches_display">
+        <!-- matches_list の各エントリをループしてテーブルに表示 -->
+        <tr th:each="match, stat : ${matches_list}">
+          <td colspan="6">
+            Match: id [[${match.id}]]
+            user1: [[${match.user1}]]
+            user2: [[${match.user2}]]
+            user1Hand: [[${match.user1Hand}]]
+            user2Hand: [[${match.user2Hand}]]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="back_link" style="display: none;">
+    </br><a href="/janken">もどる</a>
+  </div>
+
 </body>
 
 </html>

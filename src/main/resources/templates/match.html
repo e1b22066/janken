@@ -11,14 +11,16 @@
 
   <h1>Match</h1><br />
 
-  <h1>ほんだ V.S. CPU</h1>
+  <h1>
+    [[${user1.name}]] V.S. [[${user2.name}]]
+  </h1>
 
   <p>
-  <div th:if="${user}">
+  <div th:if="${user1}">
     <!-- idは動的にThymeleafの式で指定 -->
-    <a th:href="@{/fight(id=${user.id}, hand='Gu')}">ぐー</a>
-    <a th:href="@{/fight(id=${user.id}, hand='Choki')}">ちょき</a>
-    <a th:href="@{/fight(id=${user.id}, hand='Pa')}">ぱー</a><br>
+    <a th:href="@{/fight(id=${user1.id}, hand='Gu')}">ぐー</a>
+    <a th:href="@{/fight(id=${user1.id}, hand='Choki')}">ちょき</a>
+    <a th:href="@{/fight(id=${user1.id}, hand='Pa')}">ぱー</a><br>
   </div>
   <!-- プレイヤーの手、CPUの手、結果を表示 -->
   <div th:if="${Player_hand}">

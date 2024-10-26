@@ -1,13 +1,17 @@
 package oit.is.z2722.kaizi.janken;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootTest
+@EnableAsync
+@EnableScheduling
+@SpringBootApplication
 class JankenApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(JankenApplication.class, args);
+  }
 
 }
